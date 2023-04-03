@@ -12,12 +12,17 @@ def main():
         print(f"running episode: {episode}")
         total_reward = 0
         observation, _ = env.reset()
+        update_indexes = []
+
         while True:
             action = agent.chose_action(observation)
             next_observation, reward, done, truncated, _ = env.step(action)
             total_reward += reward
             if action == 0:
                 reward += 1
+            update_indexes.append(
+                agent.memory.buf_index % agent.memory.max_memory
+            )
             agent.memory.store_memory(
                 observation, next_observation, action, reward, done
             )
@@ -25,6 +30,9 @@ def main():
                 agent.learn()
             observation = next_observation
             if done or total_reward < -200:
+                if total_reward > 100:
+                    update_indexes = np.array(update_indexes, dtype=np.int32)
+                    agent.memory.rewards[update_indexes] += 5
                 if total_reward > 150:
                     tensorflow.keras.saving.save_model(
                         agent.model,
