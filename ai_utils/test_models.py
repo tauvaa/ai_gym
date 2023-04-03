@@ -5,7 +5,8 @@ import gymnasium as gym
 import numpy as np
 import tensorflow as tf
 
-model_folder = os.path.join(os.path.dirname(__file__), "models", "tensorflow")
+model_folder = os.path.join(os.path.split(os.path.dirname(__file__))[0], "models", "tensorflow")
+print(model_folder)
 
 models = [
     os.path.join(model_folder, x)
@@ -20,9 +21,9 @@ def make_choice(observation, model):
     return np.argmax(pred[0])
 
 
-def run_sim(model, num_sims):
+def run_sim(model, num_sims, render_mode=None):
     for _ in range(num_sims):
-        env = gym.make("LunarLander-v2", render_mode="human")
+        env = gym.make("LunarLander-v2", render_mode=render_mode)
         observation, _ = env.reset()
         total_reward = 0
         all_totals = []

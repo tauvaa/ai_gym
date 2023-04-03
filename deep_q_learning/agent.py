@@ -2,7 +2,7 @@ import numpy as np
 import json
 import tensorflow as tf
 
-from replay_buffer import ReplayBuffer
+from deep_q_learning.replay_buffer import ReplayBuffer
 
 
 def get_model():

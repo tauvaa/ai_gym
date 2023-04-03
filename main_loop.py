@@ -2,10 +2,14 @@ import gymnasium as gym
 import numpy as np
 import tensorflow
 
-from agent import Agent
+from deep_q_learning.agent import Agent
+SAVE_VALUE = 200
 
 
 def main():
+    back_track_value = 0
+    back_track_counter = 0
+    back_track_num = 5
     agent = Agent(input_dims=(8,))
     env = gym.make("LunarLander-v2", render_mode="human")
     for episode in range(500):
