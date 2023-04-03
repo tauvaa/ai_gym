@@ -3,3 +3,5 @@
 *venv*
 models/*
 *temp*
+./model_info.json
+./pyrightconfig.json
