@@ -18,10 +18,10 @@ def main():
     for episode in range(500):
         print(f"running episode: {episode}")
         total_reward = 0
-        observation, _ = env.reset()
         update_indexes = []
         render_mode = "human" if episode % 5 == 0 else None
         env = gym.make("LunarLander-v2", render_mode=render_mode)
+        observation, _ = env.reset()
 
         while True:
 
