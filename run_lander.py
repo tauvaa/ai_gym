@@ -12,7 +12,7 @@ def get_action(model, observation):
 
 
 def run_lander():
-    model = tf.keras.saving.load_model("./models/tensorflow/lunar-194-232")
+    model = tf.keras.saving.load_model("models/tensorflow/lunar-331-260")
     env = gym.make("LunarLander-v2", render_mode="human")
     for _ in range(10):
         total_reward = 0
