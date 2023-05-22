@@ -1,7 +1,9 @@
+import os
 import random
-from os import wait
+import shutil
 
 import numpy as np
+import pandas as pd
 
 
 class NeuralNet:
@@ -12,6 +14,39 @@ class NeuralNet:
     def add_layer(self, weights, activation=None):
         self.layers.append(weights)
         self.activations.append(activation)
+    @staticmethod
+    def get_models_dir():
+        return os.path.join(os.path.dirname(__file__), "saved_models")
+        
+    def save_model(self, model_name):
+        dir_path = self.get_models_dir()
+        model_dir = os.path.join(dir_path, model_name)
+        if model_name in os.listdir(dir_path):
+            shutil.rmtree(model_dir)
+        os.makedirs(model_dir, exist_ok=True)
+
+        for i, layer in enumerate(self.layers):
+            layer_number = str(i) if i >= 10 else "0" + str(i)
+            layer_name = f"layer_{layer_number}.csv"
+            save_file = os.path.join(model_dir, layer_name)
+            df = pd.DataFrame(layer)
+            df.to_csv(save_file, sep=",", header=None)
+
+    def load_model(self, model_name):
+        self.layers = []
+        self.activations = []
+        dir_path = os.path.join(os.path.dirname(__file__), "saved_models")
+        model_dir = os.path.join(dir_path, model_name)
+        model_files = os.listdir(model_dir)
+
+        layer_files = list(filter(lambda x: x.startswith("layer"), model_files))
+        layer_files.sort()
+        for layer_file in layer_files:
+            layer = pd.read_csv(
+                os.path.join(model_dir, layer_file), header=None
+            )
+            self.layers.append(layer.values[:, 1:])
+            self.activations.append(None)
 
     def run(self, input_vector):
         for i, layer in enumerate(self.layers):
@@ -48,6 +83,9 @@ def choice_function(network):
 
 
 def choose_breed(generation):
+    """
+    Use to breed a new generation from an existing generation.
+    """
     to_ret = []
     fitnesses = [g[0] for g in generation]
     fitnesses = [x - min(fitnesses) for x in fitnesses]
@@ -83,6 +121,13 @@ def breed_networks(network1, network2, generation, activations):
 
 
 if __name__ == "__main__":
-    gen = [(10, 1), (-7, 2), (7, 3), (-1, 4), (12, 5)]
-    gen.sort(key=lambda x: x[0], reverse=True)
-    choose_breed(gen)
+    random_network = build_random_network(
+        (
+            (4, None),
+            (8, None),
+            (4, None),
+        )
+    )
+    layer_zero = random_network.layers[0]
+    random_network.save_model("test")
+    random_network.load_model("test")
