@@ -1,7 +1,8 @@
 *__pycache__*
 *scratch*
 *venv*
-models/*
+models/tensorflow/lunar*
+genetic/saved_models/[0-9]*
 *temp*
 model_info.json
 pyrightconfig.json
