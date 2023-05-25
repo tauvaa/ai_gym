@@ -11,7 +11,7 @@ print(model_folder)
 models = [
     os.path.join(model_folder, x)
     for x in os.listdir(model_folder)
-    if int(x.split("-")[-1]) > 190
+    if x.split("-")[-1].isnumeric() and int(x.split("-")[-1]) > 190
 ]
 
 
