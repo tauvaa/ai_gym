@@ -12,7 +12,17 @@ The Q-learning algorithm uses an [agent](https://github.com/tauvaa/ai_gym/blob/m
 
 `python3 ./main_loop.py`
 
-This will begin training, showing updates every 5 training cycles.  It will also save your best networks in the models/tensorflow directory.  After aprrox 100 iterations you should be getting scores of around 200. Once you have a good sample of 200+ models, you can run the [test_models](https://github.com/tauvaa/ai_gym/blob/main/ai_utils/test_models.py) script (`PYTHONPATH=./ python3 ai_utils/test_models.py`).  This willl run the 190+ models and take an average over 3, saving the best models in a models_info.json file.  Once this is done you can run the [choose_models](https://github.com/tauvaa/ai_gym/blob/main/ai_utils/choose_model.py) script which will run the five best models in human mode, so you can see the lander land.
+This will begin training, showing updates every 5 training cycles.  It will also save your best networks in the models/tensorflow directory.  After aprrox 100 iterations you should be getting scores of around 200. Once you have a good sample of 200+ models, you can run the [test_models](https://github.com/tauvaa/ai_gym/blob/main/ai_utils/test_models.py) script
+
+`PYTHONPATH=./ python3 ai_utils/test_models.py`
+
+This will run the 190+ models and take an average over 3, saving the best models in a models_info.json file.
+
+Once this is done you can run the [choose_models](https://github.com/tauvaa/ai_gym/blob/main/ai_utils/choose_model.py) script
+
+`PYTHONPATH=./ python3 ai_utils/choose_model.py`
+
+which will run the five best models in human mode, so you can see the lander land.
 
 ## Genetic Algorithm
 The genetic algorithm creates multiple random Neural Networks and uses them to run the lander. It then takes the best of these and combines them to create the next generation of algorithms.  It continues on this way with each generation improving the previous.  Random mutation and random members are added to each generation to ensure that there is a diversity in the samples.  To begin the training run:
